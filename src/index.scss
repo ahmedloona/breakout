@@ -1,0 +1,25 @@
+@import './styles/reset.scss';
+
+body {
+    display: grid;
+    grid-template-rows: 1fr 8fr 1fr;
+    height: 100vh;
+    
+    nav {
+        border: dashed 1px greenyellow;
+    }
+
+    #canvas {
+        background: #232020;
+        display: block;
+        margin: 0 auto;
+        // background-image: url('../images/OLO2ED0.jpg');ß
+    }
+
+    footer {
+        border: dashed 1px greenyellow;
+    }
+}
+
+
+    

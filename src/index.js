@@ -1,14 +1,37 @@
-import _ from 'lodash';
-import "./App.scss"
+import "./index.scss"
+const Ball = require("./scripts/ball.js");
 
-console.log("this works");
-function component() {
-    let element = document.createElement('div');
+document.addEventListener("DOMContentLoaded", () => {
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
 
-    // Lodash, currently included via a script, is required for this line to work
-    element.innerHTML = _.join(['Hello', 'webpack in not fun'], ' ');
+    let x = canvas.width / 2;
+    let y = canvas.height - 20;
+    let delta_x = -10;
+    let delta_y = -10;
+    let ballRadius = 20;
+    let color = "#00FF00";
 
-    return element;
-}
+    const ball = new Ball({
+        start_pos: [x, y],
+        curr_pos: [x, y],
+        radius: ballRadius,
+        dx_dy: [delta_x, delta_y],
+        color: color
+    });
 
-document.body.appendChild(component());
+
+    function refreshDrawing() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ball.render(ctx);
+        ball.move(canvas);
+    }
+
+    setInterval(refreshDrawing, 30);
+
+
+});
+
+
+
+
