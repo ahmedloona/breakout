@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let x = canvas.width / 2;
     let y = canvas.height - 20;
-    let delta_x = -10;
-    let delta_y = -10;
-    let ballRadius = 20;
+    let delta_x = -5;
+    let delta_y = -5;
+    let ballRadius = 10;
     let color = "#00FF00";
 
     const ball = new Ball({
