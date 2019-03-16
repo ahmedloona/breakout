@@ -17,15 +17,22 @@ Ball.prototype.render = function(ctx) {
     ctx.closePath();
 };
 
-Ball.prototype.move = function(canvas) {
+Ball.prototype.move = function(canvas, paddle) {
+    // debugger;
     const rightCollision = this.x + this.dx > canvas.width - this.radius;
     const leftCollision = this.x + this.dx < this.radius;
     const bottomCollision = this.y + this.dy > canvas.height - this.radius;
     const topCollision = this.y + this.dy < this.radius; 
+    const paddleCollisionY = this.y + this.dy > paddle.paddleY - this.radius;
+    // debugger;
+    const paddleCollisionX = ((this.x >= paddle.paddleX) && (this.x <= paddle.paddleX + paddle.width));
+    const paddleCollision = paddleCollisionY && paddleCollisionX;
+    
+
     if ( rightCollision || leftCollision ) {
         this.dx = -1 * this.dx;
     }
-    if ( bottomCollision || topCollision ) {
+    if ( bottomCollision || topCollision || paddleCollision) {
         this.dy = -1 * this.dy;
     }
 
