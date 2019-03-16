@@ -62,8 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
         paddle.render(ctx);
         ball.move(canvas, paddle);
         paddle.move(canvas);
+        if (ball.pastPaddle === true) {
+            alert("ROUND OVER");
+            // document.location.reload();
+            clearInterval(interval);
+        }
     }
-    setInterval(refreshDrawing, 30);
+
+    
+    let interval = setInterval(refreshDrawing, 30);
+
 });
 
 
