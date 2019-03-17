@@ -2,6 +2,7 @@ import "./index.scss"
 
 const Ball = require("./scripts/ball.js");
 const Paddle = require("./scripts/paddle.js");
+const Brick = require("./scripts/brick.js");
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,22 +34,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    
+    const brickRowCount = 5;
+    const brickColumnCount = 5;
+    const paddleHeight = 20;
+    const paddleWidth = 75;
+    const paddleCanvasGap = 15;
+    
     const ball = new Ball({
         start_pos: [canvas.width / 2, canvas.height - 80],
         curr_pos: [canvas.width / 2, canvas.height - 80],
         radius: 10,
-        dx_dy: [-5, -5],
-        color: "#00FF00"
+        dx_dy: [-8, -8],
+        color: "#2e04ff"
     });
-
-    const paddleHeight = 20;
-    const paddleWidth = 75;
-    const paddleCanvasGap = 15;
 
     const paddle = new Paddle({
         height: paddleHeight,
         width: paddleWidth,
-        color: "#00FF00",
+        color: "#028f31",
         paddleX: (canvas.width - paddleWidth) / 2,
         paddleY: canvas.height - paddleHeight - paddleCanvasGap,
         dx: 10,
@@ -56,19 +60,22 @@ document.addEventListener("DOMContentLoaded", () => {
         leftArrowPress: false
     });
 
+    const bricks = Brick.setupBricks(brickRowCount, brickColumnCount);
+    
     function refreshDrawing() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        Brick.renderBricks(ctx, bricks, brickRowCount, brickColumnCount);
         ball.render(ctx);
         paddle.render(ctx);
+        Brick.detectCollisions(ball, bricks, brickRowCount, brickColumnCount);
         ball.move(canvas, paddle);
         paddle.move(canvas);
         if (ball.pastPaddle === true) {
             alert("ROUND OVER");
-            // document.location.reload();
+            document.location.reload();
             clearInterval(interval);
         }
     }
-
     
     let interval = setInterval(refreshDrawing, 30);
 
