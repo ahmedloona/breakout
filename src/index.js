@@ -34,7 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    
+    function drawScore() {
+        ctx.font = "20px Verdana";
+        ctx.fillStyle = "#028f31";
+        ctx.fillText("Score: " + score, 30, 30);
+    }
+
+    let score = 0;
     const brickRowCount = 5;
     const brickColumnCount = 5;
     const paddleHeight = 20;
@@ -45,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         start_pos: [canvas.width / 2, canvas.height - 80],
         curr_pos: [canvas.width / 2, canvas.height - 80],
         radius: 10,
-        dx_dy: [-8, -8],
+        dx_dy: [-6, -6],
         color: "#2e04ff"
     });
 
@@ -67,19 +73,33 @@ document.addEventListener("DOMContentLoaded", () => {
         Brick.renderBricks(ctx, bricks, brickRowCount, brickColumnCount);
         ball.render(ctx);
         paddle.render(ctx);
-        Brick.detectCollisions(ball, bricks, brickRowCount, brickColumnCount);
         ball.move(canvas, paddle);
         paddle.move(canvas);
+        let destroyedBrick = Brick.detectCollisions(ball, bricks, brickRowCount, brickColumnCount);
+        if (destroyedBrick){
+            score += 1;
+        }
+        drawScore();
         if (ball.pastPaddle === true) {
             alert("ROUND OVER");
             document.location.reload();
-            clearInterval(interval);
+            // clearInterval(interval);
         }
+        if (score == brickRowCount * brickColumnCount) {
+            alert("YOU WIN, CONGRATULATIONS!");
+            document.location.reload();
+            // clearInterval(interval); 
+        }
+        requestAnimationFrame(refreshDrawing);
     }
     
-    let interval = setInterval(refreshDrawing, 30);
+    // let interval = setInterval(refreshDrawing, 30);
+
+
+    refreshDrawing();
 
 });
+
 
 
 

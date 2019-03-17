@@ -24,7 +24,7 @@ Brick.setupBricks = function (brickRowCount, brickColumnCount) {
                 width: 75,
                 height: 20,
                 padding: 10,
-                offsetTop: 30,
+                offsetTop: 60,
                 offsetLeft: 30,
                 color: "#ff5804",
                 x: 0,
@@ -65,6 +65,8 @@ Brick.detectCollisions = function(ball, bricks, brickRowCount, brickColumnCount)
                 if (ball.x > brick.x && ball.x < brick.x + brick.width && ball.y > brick.y && ball.y < brick.y + brick.height) {
                     ball.dy = -1 * ball.dy;
                     brick.visible = false;
+                    ball.radius += 1;
+                    return true;
                 }
             }
         }
