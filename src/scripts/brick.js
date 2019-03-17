@@ -21,7 +21,7 @@ Brick.setupBricks = function (brickRowCount, brickColumnCount) {
         for (let r = 0; r < brickRowCount; r++) {
 
             let brick = new Brick({
-                width: 75,
+                width: 65,
                 height: 20,
                 padding: 10,
                 offsetTop: 60,
@@ -65,7 +65,7 @@ Brick.detectCollisions = function(ball, bricks, brickRowCount, brickColumnCount)
                 if (ball.x > brick.x && ball.x < brick.x + brick.width && ball.y > brick.y && ball.y < brick.y + brick.height) {
                     ball.dy = -1 * ball.dy;
                     brick.visible = false;
-                    ball.radius += 1;
+                    // ball.radius += 1;
                     return true;
                 }
             }

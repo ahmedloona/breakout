@@ -18,12 +18,6 @@ Paddle.prototype.render = function(ctx) {
 };
 
 Paddle.prototype.move = function(canvas) {
-    // if (this.rightArrowPress) {
-    //     this.paddleX += 7;
-    // }
-    // else if (this.leftArrowPress) {
-    //     this.paddleX -= 7;
-    // }
 
     if (this.rightArrowPress && this.paddleX < canvas.width - this.width) {
         this.paddleX += this.dx;
