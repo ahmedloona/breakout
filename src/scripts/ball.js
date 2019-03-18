@@ -32,9 +32,9 @@ Ball.prototype.move = function(canvas, paddle) {
     }
     if ( topCollision || paddleCollision) {
         this.dy = -1 * this.dy;
-        // if (paddleCollision) {
-        //     // this.radius -= 1;
-        // }
+        if (paddleCollision) {
+            // this.radius -= 1;
+        }
     } else if (bottomCollision) {
         this.pastPaddle = true;   
     }

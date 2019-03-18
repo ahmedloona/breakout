@@ -4,10 +4,15 @@ const Ball = require("./scripts/ball.js");
 const Paddle = require("./scripts/paddle.js");
 const Brick = require("./scripts/brick.js");
 
-
+// debugger;
 document.addEventListener("DOMContentLoaded", () => {
+
     let canvasContainer = document.getElementById("canvas-container");
-    let canvas = document.getElementById("canvas");    
+    let canvas = document.getElementById("canvas"); 
+    let messageEl = document.getElementById("message");    
+    let restartEl = document.getElementById("play-again");    
+
+    messageEl.innerHTML = "Good Luck!"
 
     canvas.width = canvasContainer.offsetWidth;
     canvas.height = canvasContainer.offsetHeight; 
@@ -16,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
+    restartEl.addEventListener("click", () => document.location.reload());
     function keyDownHandler(e) {
         if (e.key == "Right" || e.key == "ArrowRight") {
             paddle.rightArrowPress = true;
@@ -32,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
             paddle.leftArrowPress = false;
         }
     }
-
     function drawScore() {
         ctx.font = "20px Verdana";
         ctx.fillStyle = "#028f31";
@@ -48,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let score = 0;
     let lives = 3;
     const ballStartPos = [canvas.width / 2, canvas.height - 80]
-    const ballSpeed = [-6, -6]
+    const ballSpeed = [-7, -7]
     const brickRowCount = 5;
     const brickColumnCount = 5;
     const paddleHeight = 20;
@@ -91,13 +96,12 @@ document.addEventListener("DOMContentLoaded", () => {
         drawLives();
 
         if (ball.pastPaddle === true) {
-            // debugger;
             ball.pastPaddle = false;
             lives--;
             if (lives === 0) {
-                alert("GAME OVER");
-                document.location.reload();
-                clearInterval(interval); // Needed for Chrome to end game
+                messageEl.innerHTML = "Game Over"
+                restartEl.setAttribute("style", "visibility: visible");
+                cancelAnimationFrame(frame);
             }
             else {
                 ball.x = ballStartPos[0],
@@ -105,21 +109,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 ball.dx = ballSpeed[0];
                 ball.dy = ballSpeed[1];
             }
-
         }
         if (score == brickRowCount * brickColumnCount) {
-            alert("YOU WIN, CONGRATULATIONS!");
-            document.location.reload();
-            clearInterval(interval); 
+            messageEl.innerHTML = "You Won!"
+            restartEl.setAttribute("style", "visibility: visible");
+            cancelAnimationFrame(frame);
+
         }
         
-        // requestAnimationFrame(refreshDrawing);
+        let frame = requestAnimationFrame(refreshDrawing);
     }
     
-    let interval = setInterval(refreshDrawing, 30);
-
-
-    // refreshDrawing();
+    refreshDrawing();
 
 });
 
